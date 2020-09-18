@@ -1,6 +1,9 @@
 # etlgcpprim
 ETL Primitives for GCP
 
+- Bigquery
+- Cloud Storage
+- Pubsub
 
 
 ```

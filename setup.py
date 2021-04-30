@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 
 setup(name='etlgcp',
-      version='0.1.1',
+      version='0.1.2',
       description='This package is full of GCP functions to easily do basic actions.',
       author='Affini-Tech',
       author_email='lco@affini-tech.com',

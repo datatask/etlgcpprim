@@ -6,7 +6,8 @@ from google.cloud.bigquery.schema import SchemaField
 from google.cloud.exceptions import Conflict
 import uuid
 import concurrent.futures
-
+from datetime import datetime, timedelta
+from pytz import timezone
 
 class Etlbq(bigquery.Client):
     """ Class to manage bq etl primitive transformations
@@ -18,7 +19,7 @@ class Etlbq(bigquery.Client):
         self.labels = labels
         self.timeout = timeout
 
-    def createwait_table(self, dataset_name, table_name, schema_bq, retry=0):
+    def createwait_table(self, dataset_name, table_name, schema_bq, expiration=None, retry=0):
         """
         Function to create a table in a specific dataset on Google Big Query
         Input :
@@ -33,6 +34,8 @@ class Etlbq(bigquery.Client):
             table_ref = dataset_ref.table(table_name)
             # Creation of the table
             bigquery_table = bigquery.Table(table_ref, schema_bq)
+            if expiration:
+                bigquery_table.expires = datetime.now(timezone("UTC")) + timedelta(seconds=expiration)
             self.create_table(table=bigquery_table)
             tableExist = False
             while not tableExist:
